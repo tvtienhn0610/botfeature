@@ -43,36 +43,25 @@ def processSymbol(symbol):
     Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_1HOUR)
     dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
     message1h = Make_decision(dataset , "1h")
-    if (len(message1h)) {
-        message = message + "\n"+ message1h
-    }
+    if (len(message1h)) :
+        massage = massage + message1h
 
     Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_2HOUR)
     dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
     message2h = Make_decision(dataset , "2h")
-    if (len(message2h)) {
-        message = message + "\n"+ message2h
-    }
-
-    Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_3HOUR)
-    dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
-    message3h = Make_decision(dataset , "3h")
-    if (len(message3h)) {
-        message = message + "\n"+ message3h
-    }
+    if (len(message2h)) :
+        massage = massage + message2h
 
     Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_4HOUR)
     dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
     message4h = Make_decision(dataset , "4h")
 
-    if (len(message4h)) {
-        message = message + "\n"+ message4h
-    }
-
-    if(len(massage)){
+    if (len(message4h)) :
+        massage = massage + message4h
+    
+    if(len(massage)):
         print("send messagr to user telegram !!!!")
         pusgMeassageTotele(massage)
-    }
     
     
 def get_historical_new(symbol , start_string , Interval):
@@ -232,7 +221,7 @@ def Make_decision(self , Interval):
         # Trade_Direction, stop_loss_val, take_profit_val, sl = TS.heikin_ashi_ema2(self.Close, self.Open_H, self.High_H, self.Low_H, self.Close_H, Trade_Direction, stop_loss_val, take_profit_val, -99, 0)
         # print("SL heikin_ashi_ema2 {} | {} | {}".format(sl,Trade_Direction,stop_loss_val))
         #Trade_Direction,stop_loss_val,take_profit_val,_ = TS.heikin_ashi_ema(self.Close, self.Open_H, self.Close_H, Trade_Direction, stop_loss_val,take_profit_val, -99, 0)
-        return message
+        return massage
 
 def check_close_pos(self, current_pos):
         ## need to uncomment corresponding strategy in here too if using close position on condition functionality
