@@ -40,17 +40,28 @@ def processSymbol(symbol):
     print("start process sysblo = "+symbol)
     start_string = "1 Jan 2022"
     massage = ""
+    count = 0
+    
+    Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_30MINUTE)
+    dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
+    message30m = Make_decision(dataset , "30m")
+    if (len(message30m)) :
+        massage = massage + message30m
+        count += 1 ;
+    
     Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_1HOUR)
     dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
     message1h = Make_decision(dataset , "1h")
     if (len(message1h)) :
         massage = massage + message1h
+        count += 1 ;
 
     Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_2HOUR)
     dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
     message2h = Make_decision(dataset , "2h")
     if (len(message2h)) :
         massage = massage + message2h
+        count += 1 ;
 
     Date_temp, Open_temp, Close_temp, High_temp, Low_temp, Volume_temp = get_historical_new(symbol, start_string, Client.KLINE_INTERVAL_4HOUR)
     dataset = Dataset(symbol,Date_temp,Open_temp,Close_temp,High_temp,Low_temp,Volume_temp)
@@ -58,8 +69,9 @@ def processSymbol(symbol):
 
     if (len(message4h)) :
         massage = massage + message4h
+        count += 1 ;
     
-    if(len(massage)):
+    if(len(massage) and count >= 3):
         print("send messagr to user telegram !!!!")
         pusgMeassageTotele(massage)
     
@@ -373,7 +385,7 @@ def pusgMeassageTotele(message):
 startProceess()
 if __name__ == '__main__':
     # schedule.every(1).minute.do(testschedule)
-    schedule.every(22).minutes.do(startProceess)
+    schedule.every(15).minutes.do(startProceess)
 
     while True:
         schedule.run_pending()
